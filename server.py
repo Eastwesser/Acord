@@ -56,7 +56,7 @@ async def websocket_voice_chat(websocket: WebSocket):
     try:
         while True:
             data = await websocket.receive_text()  # Можно заменить на .receive_json()
-            # Здесь должна быть обработка сообщений для WebRTC
+            # Обработка сообщений для WebRTC
             for client in voice_clients:
                 if client != websocket:
                     await client.send_text(data)
