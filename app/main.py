@@ -3,7 +3,7 @@ from typing import List
 from fastapi import WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api_auth_v1 import text_chat, voice_chat
+from app.api_v1 import text_chat, voice_chat
 from app.core.config import create_app
 
 app = create_app()

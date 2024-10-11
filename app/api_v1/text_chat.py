@@ -1,4 +1,4 @@
-# app/api_auth_v1/text_chat.py
+# app/api_v1/text_chat.py
 
 import json
 from typing import List
