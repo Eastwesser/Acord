@@ -23,14 +23,6 @@ text_clients: List[WebSocket] = []
 voice_clients: List[WebSocket] = []
 
 
-@app.websocket("/ws")
-async def websocket_endpoint(websocket: WebSocket):
-    await websocket.accept()
-    while True:
-        data = await websocket.receive_text()
-        await websocket.send_text(f"Message received: {data}")
-
-
 # WebSocket для текстового чата
 @app.websocket("/ws/text")
 async def websocket_text_chat(websocket: WebSocket):
@@ -48,17 +40,17 @@ async def websocket_text_chat(websocket: WebSocket):
         text_clients.remove(websocket)
 
 
-# WebSocket для голосового чата (WebRTC)
+# WebSocket для голосового чата
 @app.websocket("/ws/voice")
 async def websocket_voice_chat(websocket: WebSocket):
     await websocket.accept()
     voice_clients.append(websocket)
     try:
         while True:
-            data = await websocket.receive_text()  # Используем JSON для WebRTC-сообщений
+            data = await websocket.receive_text()  # Получаем текстовые сообщения
             for client in voice_clients:
                 if client != websocket:
-                    await client.send_text(data)
+                    await client.send_text(data)  # Отправляем текстовые сообщения другим клиентам
     except Exception as e:
         print(f"Ошибка: {e}")
     finally:
