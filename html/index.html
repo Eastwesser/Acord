@@ -3,15 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Чат на WebSocket</title>
-    <link rel="stylesheet" href="css/styles.css"> <!-- Подключение стилей -->
+    <title>Чат на WebSocket и WebRTC</title>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <h1>Чат на WebSocket</h1>
-    <input id="messageInput" type="text" placeholder="Введите сообщение">
-    <button onclick="sendMessage()">Отправить</button>
-    <ul id="messages"></ul>
+<div id="chat-container">
+    <div id="participants">
+        <h2>Участники</h2>
+        <ul id="participant-list"></ul>
+        <button id="voiceChatButton" onclick="startVoiceChat()">Подключиться к голосовому чату</button>
+    </div>
+    <div id="chat">
+        <div id="chat-window"></div>
+        <div id="message-input-container">
+            <input id="messageInput" type="text" placeholder="Введите сообщение">
+            <button onclick="sendMessage()">Отправить</button>
+        </div>
+    </div>
+</div>
 
-    <script src="js/text-chat.js"></script>
+<script src="js/text-chat.js"></script>
+<script src="js/voice-chat.js"></script>
 </body>
 </html>

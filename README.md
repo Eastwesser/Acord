@@ -4,7 +4,7 @@ Zcord приложение взамен Discord
 
 Запуск в терминале:
 ```
-uvicorn server:app --reload
+uvicorn main:app --reload
 ```
 
 В строке обозревателя страниц:

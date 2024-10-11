@@ -1,17 +1,16 @@
 const wsText = new WebSocket("ws://localhost:8000/ws/text");
-const wsVoice = new WebSocket("ws://localhost:8000/ws/voice");
 
-wsText.onopen = () => console.log('Соединение с текстовым чатом установлено');
-wsText.onclose = () => console.log('Соединение с текстовым чатом закрыто');
-wsText.onerror = (error) => console.error('Ошибка WebSocket текста:', error);
+wsText.onopen = () => {
+    console.log('Соединение с текстовым чатом установлено');
+};
 
-wsText.onmessage = function (event) {
+wsText.onmessage = (event) => {
     const chatWindow = document.getElementById('chat-window');
     const messageItem = document.createElement('div');
     messageItem.classList.add('message');
     messageItem.textContent = event.data;
     chatWindow.appendChild(messageItem);
-    chatWindow.scrollTop = chatWindow.scrollHeight;  // Прокрутка вниз
+    chatWindow.scrollTop = chatWindow.scrollHeight;
 };
 
 function sendMessage() {
@@ -19,6 +18,5 @@ function sendMessage() {
     if (input.value !== '') {
         wsText.send(input.value);
         input.value = '';
-        console.log('Сообщение отправлено:', input.value);
     }
 }
