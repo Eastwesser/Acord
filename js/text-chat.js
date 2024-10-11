@@ -5,10 +5,11 @@ wsText.onopen = () => {
 };
 
 wsText.onmessage = (event) => {
+    const messageData = JSON.parse(event.data); // Парсим JSON
     const chatWindow = document.getElementById('chat-window');
     const messageItem = document.createElement('div');
     messageItem.classList.add('message');
-    messageItem.textContent = event.data;
+    messageItem.textContent = messageData.text; // Используем текст из парсенного объекта
     chatWindow.appendChild(messageItem);
     chatWindow.scrollTop = chatWindow.scrollHeight;
 };
@@ -16,7 +17,8 @@ wsText.onmessage = (event) => {
 function sendMessage() {
     const input = document.getElementById("messageInput");
     if (input.value !== '') {
-        wsText.send(input.value);
+        const message = {text: input.value}; // Оборачиваем текст в объект
+        wsText.send(JSON.stringify(message)); // Преобразуем в строку JSON
         input.value = '';
     }
 }

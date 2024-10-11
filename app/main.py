@@ -1,10 +1,21 @@
+from typing import List
+
 from fastapi import WebSocket, WebSocketDisconnect
+from fastapi.middleware.cors import CORSMiddleware
 
 from app.api_auth_v1 import text_chat, voice_chat
 from app.core.config import create_app
 
-# Используем create_app для создания приложения
 app = create_app()
+
+# Подключение CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Позволить всем источникам
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Подключение маршрутов
 app.include_router(text_chat.router)
@@ -13,11 +24,11 @@ app.include_router(voice_chat.router)
 
 class ConnectionManager:
     def __init__(self):
-        self.active_connections: list[WebSocket] = []
+        self.active_connections: List[WebSocket] = []
 
     async def connect(self, websocket: WebSocket):
         await websocket.accept()
-        if len(self.active_connections) >= 10:
+        if len(self.active_connections) >= 3:
             await websocket.close()  # Закрыть соединение, если превышен лимит
             return
         self.active_connections.append(websocket)
@@ -25,22 +36,21 @@ class ConnectionManager:
     def disconnect(self, websocket: WebSocket):
         self.active_connections.remove(websocket)
 
-    async def broadcast(self, message: str):
+    async def broadcast_audio(self, data: bytes):
         for connection in self.active_connections:
-            await connection.send_text(message)
+            await connection.send_bytes(data)
 
 
 manager = ConnectionManager()
 
 
-# WebSocket endpoint
-@app.websocket("/ws/{chat_type}")
-async def websocket_endpoint(websocket: WebSocket, chat_type: str):
+@app.websocket("/ws/voice")
+async def websocket_endpoint(websocket: WebSocket):
     await manager.connect(websocket)
     try:
         while True:
-            data = await websocket.receive_text()
-            await manager.broadcast(f"{chat_type} chat: {data}")
+            audio_data = await websocket.receive_bytes()  # Получаем аудио в виде байтов
+            await manager.broadcast_audio(audio_data)  # Пересылаем всем клиентам
     except WebSocketDisconnect:
         manager.disconnect(websocket)
 

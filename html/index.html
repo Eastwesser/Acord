@@ -1,28 +1,61 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Чат на WebSocket и WebRTC</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <title>Voice Chat</title>
+    <style>
+        #chat {
+            border: 1px solid #ccc;
+            height: 300px;
+            overflow-y: scroll;
+            margin-bottom: 10px;
+            padding: 10px;
+        }
+    </style>
 </head>
 <body>
-<div id="chat-container">
-    <div id="participants">
-        <h2>Участники</h2>
-        <ul id="participant-list"></ul>
-        <button id="voiceChatButton" onclick="startVoiceChat()">Подключиться к голосовому чату</button>
-    </div>
-    <div id="chat">
-        <div id="chat-window"></div>
-        <div id="message-input-container">
-            <input id="messageInput" type="text" placeholder="Введите сообщение">
-            <button onclick="sendMessage()">Отправить</button>
-        </div>
-    </div>
-</div>
+<h1>Voice Chat</h1>
 
-<script src="js/text-chat.js"></script>
-<script src="js/voice-chat.js"></script>
+<div id="chat"></div> <!-- Окно для чата -->
+
+<input id="nickname" type="text" placeholder="Введите ник"/>
+<input id="message" type="text" placeholder="Введите сообщение"/>
+<button id="send">Отправить</button>
+
+<script>
+    const socket = new WebSocket('ws://127.0.0.1:8000/ws/text'); // URL для текстового чата
+    const chat = document.getElementById('chat');
+    const nicknameInput = document.getElementById('nickname');
+    const messageInput = document.getElementById('message');
+    const sendButton = document.getElementById('send');
+
+    socket.onopen = () => {
+        console.log("Connected to the server");
+    };
+
+    // Получение текстовых сообщений с сервера
+    socket.onmessage = (event) => {
+        const messageData = JSON.parse(event.data);
+        const messageElement = document.createElement('div');
+        messageElement.textContent = `${messageData.nickname}: ${messageData.text}`;
+        chat.appendChild(messageElement);
+        chat.scrollTop = chat.scrollHeight; // Прокручиваем чат вниз
+    };
+
+    sendButton.onclick = () => {
+        const nickname = nicknameInput.value.trim();
+        const message = messageInput.value.trim();
+        if (nickname && message) {
+            const messageData = {nickname: nickname, text: message};
+            socket.send(JSON.stringify(messageData)); // Отправляем сообщение в формате JSON
+            messageInput.value = ''; // Очищаем поле ввода сообщения
+        }
+    };
+
+    socket.onclose = () => {
+        console.log("Disconnected from the server");
+    };
+</script>
 </body>
 </html>
