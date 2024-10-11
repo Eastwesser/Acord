@@ -1,4 +1,4 @@
-const ws = new WebSocket("ws://localhost:8000/ws");
+const ws = new WebSocket("ws://localhost:8000/ws/text");
 
 // Логирование для отладки
 ws.onopen = () => console.log('Соединение установлено');

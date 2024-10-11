@@ -1,7 +1,7 @@
 let localStream;
 let peerConnection;
 
-const wsVoice = new WebSocket("ws://localhost:8000/ws");
+const wsVoice = new WebSocket("ws://localhost:8000/ws/voice");
 
 // Конфигурация STUN-сервера для WebRTC
 const configuration = {
