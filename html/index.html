@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Voice Chat</title>
     <style>
+        body {
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.night-mode {
+            background-color: #121212;
+            color: #ffffff;
+        }
+
         #chat {
             border: 1px solid #ccc;
             height: 300px;
@@ -16,6 +25,15 @@
 </head>
 <body>
 <h1>Voice Chat</h1>
+
+<div>
+    <label for="themeToggle">Сменить режим:</label>
+    <input type="range" id="themeToggle" min="0" max="1" step="1" onchange="toggleTheme(this.value)">
+</div>
+<div>
+    <button id="voiceChatButton" onclick="toggleVoiceChat()">Подключиться</button>
+    <button onclick="checkMicrophone()">Проверка микрофона</button>
+</div>
 
 <div id="chat"></div> <!-- Окно для чата -->
 
@@ -56,6 +74,43 @@
     socket.onclose = () => {
         console.log("Disconnected from the server");
     };
+
+    function toggleTheme(value) {
+        if (value == 0) {
+            document.body.classList.remove('night-mode');
+        } else {
+            document.body.classList.add('night-mode');
+        }
+    }
+
+    function checkMicrophone() {
+        navigator.mediaDevices.getUserMedia({audio: true})
+            .then(stream => {
+                const audio = new Audio();
+                audio.srcObject = stream;
+                audio.play();
+                // Вы можете добавить кнопку для остановки воспроизведения, если нужно
+            })
+            .catch(error => {
+                console.error("Ошибка доступа к микрофону:", error);
+            });
+    }
+
+    let isConnected = false;
+
+    function toggleVoiceChat() {
+        const button = document.getElementById("voiceChatButton");
+        if (isConnected) {
+            // Логика отключения от голосового чата
+            button.textContent = "Подключиться";
+            // Здесь нужно добавить код для отключения
+        } else {
+            // Логика подключения к голосовому чату
+            button.textContent = "Отключиться";
+            // Здесь нужно добавить код для подключения
+        }
+        isConnected = !isConnected; // Переключение состояния
+    }
 </script>
 </body>
 </html>
