@@ -16,7 +16,7 @@ uvicorn main:app --reload
 ```plaintext
 http://127.0.0.1:8000/html/text-chat.html
 ```
-Also check:
+4. Also check:
 ```plaintext
 http://127.0.0.1:8000/html/index.html
 ```
