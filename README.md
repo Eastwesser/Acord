@@ -1,6 +1,6 @@
-# Zcord
+# Acord
 
-Zcord приложение взамен Discord
+Acord приложение взамен Discord
 
 Запуск в терминале:
 ```
@@ -11,7 +11,3 @@ uvicorn main:app --reload
 ```plaintext
 http://127.0.0.1:8000/html/text-chat.html
 ```
-
-# ⬜⬜⬜⬜⬜⬜⬜⬜
-# 🟦🟦🟦🟦🟦🟦🟦🟦
-# 🟥🟥🟥🟥🟥🟥🟥🟥
