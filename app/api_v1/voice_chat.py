@@ -2,15 +2,13 @@
 # Здесь будет обработка голосового чата через WebSocket,
 # а WebRTC логика будет вынесена в отдельный модуль.
 
-from typing import List
-
 from fastapi import APIRouter, WebSocket
 
 from app.services.webrtc_handler import WebRTCHandler
 
 router = APIRouter()
 
-voice_clients: List[WebSocket] = []
+voice_clients = []
 
 
 @router.websocket("/ws/voice")

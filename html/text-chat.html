@@ -14,7 +14,6 @@
             <!-- Здесь будет список участников -->
         </ul>
         <button id="voiceChatButton" onclick="startVoiceChat()">Подключиться к голосовому чату</button>
-        <button id="connect-button">Подключиться к голосовому чату</button>
 
         <script>
             let localStream;
@@ -24,7 +23,7 @@
 
             wsVoice.onopen = function () {
                 console.log("Подключение к голосовому чату установлено.");
-                document.getElementById("connect-button").textContent = "Подключено";
+                document.getElementById("voiceChatButton").textContent = "Отключиться";
             };
 
             wsVoice.onmessage = async function (event) {
@@ -67,7 +66,7 @@
                 }));
             }
 
-            document.getElementById("connect-button").addEventListener("click", () => {
+            document.getElementById("voiceChatButton").addEventListener("click", () => {
                 startVoiceChat();
             });
         </script>
@@ -82,7 +81,6 @@
     </div>
 </div>
 
-<script src="/js/text-chat.js"></script>
-<script src="/js/voice-chat.js"></script>
+<script src="/js/text-voice-chat.js"></script>
 </body>
 </html>

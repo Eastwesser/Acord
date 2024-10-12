@@ -1,4 +1,4 @@
-const themeToggle = document.getElementById('theme-toggle');
+const themeToggle = document.getElementById('themeToggle');
 const body = document.body;
 
 // Устанавливаем начальную тему

@@ -21,6 +21,6 @@ class WebSocketHandler:
                 await client.send_text(f"Кто-то написал: {message}")
 
     @staticmethod
-    async def handle_disconnect(websocket: WebSocket, clients: List[WebSocket], error: Exception):
+    async def handle_disconnect(websocket: WebSocket, clients: List[WebSocket]):
         clients.remove(websocket)
-        print(f"Client {websocket} disconnected. Error: {error}")
+        print(f"Client {websocket} disconnected.")

@@ -4,24 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Voice Chat</title>
-    <style>
-        body {
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        body.night-mode {
-            background-color: #121212;
-            color: #ffffff;
-        }
-
-        #chat {
-            border: 1px solid #ccc;
-            height: 300px;
-            overflow-y: scroll;
-            margin-bottom: 10px;
-            padding: 10px;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
 <h1>Voice Chat</h1>
@@ -41,76 +24,7 @@
 <input id="message" type="text" placeholder="Введите сообщение"/>
 <button id="send">Отправить</button>
 
-<script>
-    const socket = new WebSocket('ws://127.0.0.1:8000/ws/text'); // URL для текстового чата
-    const chat = document.getElementById('chat');
-    const nicknameInput = document.getElementById('nickname');
-    const messageInput = document.getElementById('message');
-    const sendButton = document.getElementById('send');
-
-    socket.onopen = () => {
-        console.log("Connected to the server");
-    };
-
-    // Получение текстовых сообщений с сервера
-    socket.onmessage = (event) => {
-        const messageData = JSON.parse(event.data);
-        const messageElement = document.createElement('div');
-        messageElement.textContent = `${messageData.nickname}: ${messageData.text}`;
-        chat.appendChild(messageElement);
-        chat.scrollTop = chat.scrollHeight; // Прокручиваем чат вниз
-    };
-
-    sendButton.onclick = () => {
-        const nickname = nicknameInput.value.trim();
-        const message = messageInput.value.trim();
-        if (nickname && message) {
-            const messageData = {nickname: nickname, text: message};
-            socket.send(JSON.stringify(messageData)); // Отправляем сообщение в формате JSON
-            messageInput.value = ''; // Очищаем поле ввода сообщения
-        }
-    };
-
-    socket.onclose = () => {
-        console.log("Disconnected from the server");
-    };
-
-    function toggleTheme(value) {
-        if (value == 0) {
-            document.body.classList.remove('night-mode');
-        } else {
-            document.body.classList.add('night-mode');
-        }
-    }
-
-    function checkMicrophone() {
-        navigator.mediaDevices.getUserMedia({audio: true})
-            .then(stream => {
-                const audio = new Audio();
-                audio.srcObject = stream;
-                audio.play();
-                // Вы можете добавить кнопку для остановки воспроизведения, если нужно
-            })
-            .catch(error => {
-                console.error("Ошибка доступа к микрофону:", error);
-            });
-    }
-
-    let isConnected = false;
-
-    function toggleVoiceChat() {
-        const button = document.getElementById("voiceChatButton");
-        if (isConnected) {
-            // Логика отключения от голосового чата
-            button.textContent = "Подключиться";
-            // Здесь нужно добавить код для отключения
-        } else {
-            // Логика подключения к голосовому чату
-            button.textContent = "Отключиться";
-            // Здесь нужно добавить код для подключения
-        }
-        isConnected = !isConnected; // Переключение состояния
-    }
-</script>
+<script src="/js/script.js"></script>
+<script src="/js/text-voice-chat.js"></script>
 </body>
 </html>

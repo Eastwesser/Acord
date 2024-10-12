@@ -17,17 +17,9 @@ class WebRTCHandler:
     @staticmethod
     async def handle_message(data: str, websocket: WebSocket, clients: List[WebSocket]):
         message = await websocket.receive_json()
-
-        if message["type"] == "offer" or message["type"] == "answer":
-            # Отправляем оффер или ответ всем остальным клиентам
-            for client in clients:
-                if client != websocket:
-                    await client.send_json(message)
-        elif message["type"] == "ice-candidate":
-            # Отправляем кандидата ICE всем остальным клиентам
-            for client in clients:
-                if client != websocket:
-                    await client.send_json(message)
+        for client in clients:
+            if client != websocket:
+                await client.send_json(message)
 
     @staticmethod
     async def handle_disconnect(websocket: WebSocket, clients: List[WebSocket], error: Exception):
