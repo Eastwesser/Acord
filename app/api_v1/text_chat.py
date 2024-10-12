@@ -1,6 +1,7 @@
 # app/api_v1/text_chat.py
 
-from fastapi import APIRouter, WebSocket, WebSocketDisconnect
+from fastapi import APIRouter, WebSocketDisconnect
+from starlette.websockets import WebSocket
 
 from app.services.websocket_handler import WebSocketHandler
 

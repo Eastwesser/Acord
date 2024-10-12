@@ -1,3 +1,4 @@
+/* Основные стили */
 body {
     font-family: Arial, sans-serif;
     display: flex;
@@ -5,56 +6,63 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    background-color: #2f3136;
+    background-color: #2f3136; /* Темная тема по умолчанию */
     color: #dcddde;
     transition: background-color 0.3s, color 0.3s;
 }
 
+/* Ночная тема */
 body.night-mode {
     background-color: #121212;
     color: #ffffff;
 }
 
+/* Контейнер для чата */
 #chat-container {
     display: flex;
     width: 80%;
     height: 80%;
     border-radius: 10px;
-    background-color: #36393f;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #36393f; /* Цвет фона контейнера */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Увеличенная тень для глубины */
 }
 
+/* Список участников */
 #participants {
     width: 25%;
-    background-color: #40444b;
-    border-right: 1px solid #4f545c;
+    background-color: #40444b; /* Цвет фона списка участников */
+    border-right: 1px solid #4f545c; /* Разделитель */
     padding: 10px;
     box-sizing: border-box;
-    overflow-y: auto;
+    overflow-y: auto; /* Прокрутка при переполнении */
 }
 
+/* Заголовок списка участников */
 #participants h2 {
     margin: 0 0 10px;
     font-size: 18px;
-    color: #dcddde;
+    color: #dcddde; /* Цвет заголовка */
 }
 
+/* Участник чата */
 .participant {
     padding: 10px;
     margin-bottom: 5px;
-    background-color: #5865f2;
-    border-radius: 5px;
-    color: white;
+    background-color: #5865f2; /* Цвет фона участника */
+    border-radius: 5px; /* Закругленные углы */
+    color: white; /* Цвет текста участника */
 }
 
+/* Чатовая область */
 #chat {
     width: 75%;
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Вертикальное расположение элементов чата */
 }
 
+/* Окно чата */
 #chat-window {
-    flex-grow: 1;
+    flex-grow: 1; /* Занимает оставшееся пространство */
     padding: 10px;
     background-color: #40444b;
     border-bottom: 1px solid #4f545c;
@@ -63,6 +71,7 @@ body.night-mode {
     margin: 10px;
 }
 
+/* Сообщение в чате */
 .message {
     margin-bottom: 10px;
     padding: 8px;
@@ -71,12 +80,14 @@ body.night-mode {
     color: #dcddde;
 }
 
+/* Контейнер для ввода сообщения */
 #message-input-container {
     display: flex;
     padding: 10px;
     border-top: 1px solid #4f545c;
 }
 
+/* Поле ввода сообщения */
 #messageInput {
     flex-grow: 1;
     padding: 10px;
@@ -87,9 +98,10 @@ body.night-mode {
     color: #dcddde;
 }
 
+/* Кнопка отправки сообщения */
 button {
     padding: 10px 20px;
-    background-color: #7289da;
+    background-color: #7289da; /* Цвет кнопки по умолчанию */
     color: white;
     border: none;
     border-radius: 5px;
@@ -97,6 +109,16 @@ button {
     font-size: 16px;
 }
 
+/* Эффект при наведении на кнопку */
 button:hover {
     background-color: #5b6eae;
+}
+
+/* Темная тема для кнопок (при переключении) */
+body.night-mode button {
+    background-color: #5b6eae;
+}
+
+body.night-mode button:hover {
+    background-color: #7289da;
 }

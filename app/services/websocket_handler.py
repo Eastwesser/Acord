@@ -1,5 +1,4 @@
-# Файл app/services/websocket_handler.py
-# Этот модуль будет общим для обработки WebSocket соединений.
+# app/services/websocket_handler.py
 
 from typing import List
 
@@ -12,7 +11,7 @@ class WebSocketHandler:
     async def connect(websocket: WebSocket, clients: List[WebSocket]):
         await websocket.accept()
         clients.append(websocket)
-        print(f"Client {websocket} connected.")
+        print(f"Client {websocket.client} connected.")
 
     @staticmethod
     async def broadcast(message: str, clients: List[WebSocket], sender: WebSocket):
@@ -23,4 +22,4 @@ class WebSocketHandler:
     @staticmethod
     async def handle_disconnect(websocket: WebSocket, clients: List[WebSocket]):
         clients.remove(websocket)
-        print(f"Client {websocket} disconnected.")
+        print(f"Client {websocket.client} disconnected.")

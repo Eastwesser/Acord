@@ -1,27 +1,26 @@
-# Файл app/services/webrtc_handler.py
-# Здесь будет храниться логика для обработки WebRTC сообщений и кандидатов ICE.
+# app/services/webrtc_handler.py
 
 from typing import List
 
 from fastapi import WebSocket
+
+from app.services.websocket_handler import WebSocketHandler
 
 
 class WebRTCHandler:
 
     @staticmethod
     async def connect(websocket: WebSocket, clients: List[WebSocket]):
-        await websocket.accept()
-        clients.append(websocket)
-        print(f"Client {websocket} connected to voice chat.")
+        await WebSocketHandler.connect(websocket, clients)
 
     @staticmethod
     async def handle_message(data: str, websocket: WebSocket, clients: List[WebSocket]):
-        message = await websocket.receive_json()
+        # Используем переданные данные напрямую.
+        message = data
         for client in clients:
             if client != websocket:
                 await client.send_json(message)
 
     @staticmethod
-    async def handle_disconnect(websocket: WebSocket, clients: List[WebSocket], error: Exception):
-        clients.remove(websocket)
-        print(f"Client {websocket} disconnected from voice chat. Error: {error}")
+    async def handle_disconnect(websocket: WebSocket, clients: List[WebSocket]):
+        await WebSocketHandler.handle_disconnect(websocket, clients)

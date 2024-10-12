@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Voice Chat</title>
+    <title>Текстовый и голосовой чат</title>
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
@@ -11,20 +11,32 @@
 
 <div>
     <label for="themeToggle">Сменить режим:</label>
-    <input type="range" id="themeToggle" min="0" max="1" step="1" onchange="toggleTheme(this.value)">
+    <input type="range" id="themeToggle" min="0" max="1" step="1">
 </div>
 <div>
-    <button id="voiceChatButton" onclick="toggleVoiceChat()">Подключиться</button>
+    <button id="voiceChatButton" onclick="toggleVoiceChat()">Подключиться к голосовому чату</button>
     <button onclick="checkMicrophone()">Проверка микрофона</button>
 </div>
 
-<div id="chat"></div> <!-- Окно для чата -->
+<div id="chat-container">
+    <div id="participants">
+        <h2>Участники</h2>
+        <ul id="participant-list">
+            <!-- Здесь будет список участников -->
+        </ul>
+    </div>
+
+    <div id="chat">
+        <div id="chat-window"></div>
+        <div id="message-input-container">
+            <input id="messageInput" type="text" placeholder="Введите сообщение">
+            <button onclick="sendMessage()">Отправить</button>
+        </div>
+    </div>
+</div>
 
 <input id="nickname" type="text" placeholder="Введите ник"/>
-<input id="message" type="text" placeholder="Введите сообщение"/>
-<button id="send">Отправить</button>
 
 <script src="/js/script.js"></script>
-<script src="/js/text-voice-chat.js"></script>
 </body>
 </html>
